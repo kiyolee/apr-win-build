@@ -159,7 +159,7 @@ APR_DECLARE(apr_uint64_t) apr_atomic_inc64(volatile apr_uint64_t *mem);
  * @param mem pointer to the atomic value
  * @return zero if the value becomes zero on decrement, otherwise non-zero
  */
-APR_DECLARE(int) apr_atomic_dec64(volatile apr_uint64_t *mem);
+APR_DECLARE(apr_uint64_t) apr_atomic_dec64(volatile apr_uint64_t *mem);
 
 /**
  * compare an apr_uint64_t's value with 'cmp'.

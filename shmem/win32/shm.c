@@ -124,7 +124,7 @@ APR_DECLARE(apr_status_t) apr_shm_create_ex(apr_shm_t **m,
     HANDLE hMap, hFile;
     apr_status_t rv;
     apr_size_t size;
-    apr_file_t *f;
+    apr_file_t *f = NULL;
     void *base;
     void *mapkey;
     DWORD err, sizelo, sizehi;

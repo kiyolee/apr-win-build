@@ -51,7 +51,7 @@ APR_DECLARE(apr_uint64_t) apr_atomic_inc64(volatile apr_uint64_t *mem)
 #endif
 }
 
-APR_DECLARE(int) apr_atomic_dec64(volatile apr_uint64_t *mem)
+APR_DECLARE(apr_uint64_t) apr_atomic_dec64(volatile apr_uint64_t *mem)
 {
 #if (defined(_M_IA64) || defined(_M_AMD64)) && !defined(RC_INVOKED)
     return InterlockedDecrement64(mem);
