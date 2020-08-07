@@ -101,6 +101,7 @@
     <ClCompile Include="..\..\atomic\win32\apr_atomic.c" />
     <ClCompile Include="..\..\atomic\win32\apr_atomic64.c" />
     <ClCompile Include="..\..\dso\win32\dso.c" />
+    <ClCompile Include="..\..\encoding\apr_encode.c" />
     <ClCompile Include="..\..\encoding\apr_escape.c" />
     <ClCompile Include="..\..\file_io\unix\copy.c" />
     <ClCompile Include="..\..\file_io\unix\fileacc.c" />

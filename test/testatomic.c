@@ -234,29 +234,29 @@ static void test_set64(abts_case *tc, void *data)
 {
     apr_uint64_t y64;
     apr_atomic_set64(&y64, 2);
-    ABTS_INT_EQUAL(tc, 2, y64);
+    ABTS_INT64_EQUAL(tc, 2, y64);
 }
 
 static void test_read64(abts_case *tc, void *data)
 {
     apr_uint64_t y64;
     apr_atomic_set64(&y64, 2);
-    ABTS_INT_EQUAL(tc, 2, apr_atomic_read64(&y64));
+    ABTS_INT64_EQUAL(tc, 2, apr_atomic_read64(&y64));
 }
 
 static void test_dec64(abts_case *tc, void *data)
 {
     apr_uint64_t y64;
-    int rv;
+    apr_uint64_t rv;
 
     apr_atomic_set64(&y64, 2);
 
     rv = apr_atomic_dec64(&y64);
-    ABTS_INT_EQUAL(tc, 1, y64);
+    ABTS_INT64_EQUAL(tc, 1, y64);
     ABTS_ASSERT(tc, "atomic_dec returned zero when it shouldn't", rv != 0);
 
     rv = apr_atomic_dec64(&y64);
-    ABTS_INT_EQUAL(tc, 0, y64);
+    ABTS_INT64_EQUAL(tc, 0, y64);
     ABTS_ASSERT(tc, "atomic_dec didn't returned zero when it should", rv == 0);
 }
 
@@ -268,8 +268,8 @@ static void test_xchg64(abts_case *tc, void *data)
     apr_atomic_set64(&y64, 100);
     oldval = apr_atomic_xchg64(&y64, 50);
 
-    ABTS_INT_EQUAL(tc, 100, oldval);
-    ABTS_INT_EQUAL(tc, 50, y64);
+    ABTS_INT64_EQUAL(tc, 100, oldval);
+    ABTS_INT64_EQUAL(tc, 50, y64);
 }
 
 static void test_add64(abts_case *tc, void *data)
@@ -279,8 +279,8 @@ static void test_add64(abts_case *tc, void *data)
 
     apr_atomic_set64(&y64, 23);
     oldval = apr_atomic_add64(&y64, 4);
-    ABTS_INT_EQUAL(tc, 23, oldval);
-    ABTS_INT_EQUAL(tc, 27, y64);
+    ABTS_INT64_EQUAL(tc, 23, oldval);
+    ABTS_INT64_EQUAL(tc, 27, y64);
 }
 
 static void test_add64_neg(abts_case *tc, void *data)
@@ -290,8 +290,8 @@ static void test_add64_neg(abts_case *tc, void *data)
 
     apr_atomic_set64(&y64, 23);
     oldval = apr_atomic_add64(&y64, -10);
-    ABTS_INT_EQUAL(tc, 23, oldval);
-    ABTS_INT_EQUAL(tc, 13, y64);
+    ABTS_INT64_EQUAL(tc, 23, oldval);
+    ABTS_INT64_EQUAL(tc, 13, y64);
 }
 
 static void test_inc64(abts_case *tc, void *data)
@@ -301,8 +301,8 @@ static void test_inc64(abts_case *tc, void *data)
 
     apr_atomic_set64(&y64, 23);
     oldval = apr_atomic_inc64(&y64);
-    ABTS_INT_EQUAL(tc, 23, oldval);
-    ABTS_INT_EQUAL(tc, 24, y64);
+    ABTS_INT64_EQUAL(tc, 23, oldval);
+    ABTS_INT64_EQUAL(tc, 24, y64);
 }
 
 static void test_set_add_inc_sub64(abts_case *tc, void *data)
@@ -314,7 +314,7 @@ static void test_set_add_inc_sub64(abts_case *tc, void *data)
     apr_atomic_inc64(&y64);
     apr_atomic_sub64(&y64, 10);
 
-    ABTS_INT_EQUAL(tc, 11, y64);
+    ABTS_INT64_EQUAL(tc, 11, y64);
 }
 
 static void test_wrap_zero64(abts_case *tc, void *data)
@@ -681,9 +681,9 @@ static void test_atomics_threaded64(abts_case *tc, void *data)
                     s1 == exit_ret_val && s2 == exit_ret_val);
     }
 
-    ABTS_INT_EQUAL(tc, NUM_THREADS * NUM_ITERATIONS, mutex_locks64);
-    ABTS_INT_EQUAL(tc, NUM_THREADS * NUM_ITERATIONS,
-                   apr_atomic_read64(&atomic_ops64));
+    ABTS_INT64_EQUAL(tc, NUM_THREADS * NUM_ITERATIONS, mutex_locks64);
+    ABTS_INT64_EQUAL(tc, NUM_THREADS * NUM_ITERATIONS,
+                     apr_atomic_read64(&atomic_ops64));
 
     rv = apr_thread_mutex_destroy(thread_lock64);
     ABTS_ASSERT(tc, "Failed creating threads", rv == APR_SUCCESS);
@@ -728,7 +728,7 @@ static void busyloop_add64(tbox_t64 *tbox)
         busyloop_read64(tbox);
         val = apr_atomic_add64(tbox->mem, tbox->postval);
         apr_thread_mutex_lock(thread_lock64);
-        ABTS_INT_EQUAL(tbox->tc, val, tbox->preval);
+        ABTS_INT64_EQUAL(tbox->tc, val, tbox->preval);
         apr_thread_mutex_unlock(thread_lock64);
     } while (--tbox->loop);
 }
@@ -749,7 +749,7 @@ static void busyloop_inc64(tbox_t64 *tbox)
         busyloop_read64(tbox);
         val = apr_atomic_inc64(tbox->mem);
         apr_thread_mutex_lock(thread_lock64);
-        ABTS_INT_EQUAL(tbox->tc, val, tbox->preval);
+        ABTS_INT64_EQUAL(tbox->tc, val, tbox->preval);
         apr_thread_mutex_unlock(thread_lock64);
     } while (--tbox->loop);
 }
@@ -762,7 +762,7 @@ static void busyloop_dec64(tbox_t64 *tbox)
         busyloop_read64(tbox);
         val = apr_atomic_dec64(tbox->mem);
         apr_thread_mutex_lock(thread_lock64);
-        ABTS_INT_NEQUAL(tbox->tc, 0, val);
+        ABTS_INT64_NEQUAL(tbox->tc, 0, val);
         apr_thread_mutex_unlock(thread_lock64);
     } while (--tbox->loop);
 }
@@ -791,7 +791,7 @@ static void busyloop_xchg64(tbox_t64 *tbox)
         busyloop_read64(tbox);
         val = apr_atomic_xchg64(tbox->mem, tbox->postval);
         apr_thread_mutex_lock(thread_lock64);
-        ABTS_INT_EQUAL(tbox->tc, val, tbox->preval);
+        ABTS_INT64_EQUAL(tbox->tc, val, tbox->preval);
         apr_thread_mutex_unlock(thread_lock64);
     } while (--tbox->loop);
 }
@@ -870,7 +870,7 @@ static void test_atomics_busyloop_threaded64(abts_case *tc, void *data)
         ABTS_ASSERT(tc, "Invalid return value from thread_join", retval == 0);
     }
 
-    ABTS_INT_EQUAL(tbox->tc, 98, count);
+    ABTS_INT64_EQUAL(tbox->tc, 98, count);
 
     rv = apr_thread_mutex_destroy(thread_lock64);
     ABTS_ASSERT(tc, "Failed creating threads", rv == APR_SUCCESS);

@@ -505,7 +505,7 @@ static void test_nonblock_inheritance(abts_case *tc, void *data)
 {
     apr_status_t rv;
     apr_socket_t *sock;
-    apr_socket_t *sock2;
+    apr_socket_t *sock2 = NULL;
     apr_proc_t proc;
     char buffer[10];
     apr_size_t length;

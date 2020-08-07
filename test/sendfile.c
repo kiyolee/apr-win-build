@@ -184,7 +184,7 @@ static int client(apr_pool_t *p, client_socket_mode_t socket_mode,
                   const char *host, int start_server)
 {
     apr_status_t rv, tmprv;
-    apr_socket_t *sock;
+    apr_socket_t *sock = NULL;
     char buf[120];
     apr_file_t *f = NULL;
     apr_size_t len;

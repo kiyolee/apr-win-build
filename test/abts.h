@@ -22,6 +22,7 @@ extern "C" {
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdint.h>
 #ifdef WIN32
 #include <io.h>
 #else
@@ -70,6 +71,8 @@ void abts_log_message(const char *fmt, ...);
 
 void abts_int_equal(abts_case *tc, const int expected, const int actual, int lineno);
 void abts_int_nequal(abts_case *tc, const int expected, const int actual, int lineno);
+void abts_int64_equal(abts_case* tc, const int64_t expected, const int64_t actual, int lineno);
+void abts_int64_nequal(abts_case* tc, const int64_t expected, const int64_t actual, int lineno);
 void abts_str_equal(abts_case *tc, const char *expected, const char *actual, int lineno);
 void abts_str_nequal(abts_case *tc, const char *expected, const char *actual,
                        size_t n, int lineno);
@@ -84,6 +87,8 @@ void abts_size_equal(abts_case *tc, size_t expected, size_t actual, int lineno);
 /* Convenience macros. Ryan hates these! */
 #define ABTS_INT_EQUAL(a, b, c)     abts_int_equal(a, b, c, __LINE__)
 #define ABTS_INT_NEQUAL(a, b, c)    abts_int_nequal(a, b, c, __LINE__)
+#define ABTS_INT64_EQUAL(a, b, c)   abts_int64_equal(a, b, c, __LINE__)
+#define ABTS_INT64_NEQUAL(a, b, c)  abts_int64_nequal(a, b, c, __LINE__)
 #define ABTS_STR_EQUAL(a, b, c)     abts_str_equal(a, b, c, __LINE__)
 #define ABTS_STR_NEQUAL(a, b, c, d) abts_str_nequal(a, b, c, d, __LINE__)
 #define ABTS_PTR_NOTNULL(a, b)      abts_ptr_notnull(a, b, __LINE__)

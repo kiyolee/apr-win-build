@@ -348,5 +348,8 @@
     <ClCompile Include="..\..\atomic\win32\apr_atomic64.c">
       <Filter>Source Files\atomic\win32</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\encoding\apr_encode.c">
+      <Filter>Source Files\encoding</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
