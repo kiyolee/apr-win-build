@@ -23,7 +23,7 @@ APR_DECLARE(apr_uint64_t) apr_atomic_add64(volatile apr_uint64_t *mem, apr_uint6
 #if (defined(_M_IA64) || defined(_M_AMD64))
     return InterlockedExchangeAdd64(mem, val);
 #else
-    return InterlockedExchangeAdd64((long *)mem, val);
+    return InterlockedExchangeAdd64((LONG64 *)mem, val);
 #endif
 }
 
@@ -37,35 +37,35 @@ APR_DECLARE(void) apr_atomic_sub64(volatile apr_uint64_t *mem, apr_uint64_t val)
 #if (defined(_M_IA64) || defined(_M_AMD64))
     InterlockedExchangeAdd64(mem, -val);
 #else
-    InterlockedExchangeAdd64((long *)mem, -val);
+    InterlockedExchangeAdd64((LONG64 *)mem, -val);
 #endif
 }
 
 APR_DECLARE(apr_uint64_t) apr_atomic_inc64(volatile apr_uint64_t *mem)
 {
     /* we return old value, win64 returns new value :( */
-#if (defined(_M_IA64) || defined(_M_AMD64)) && !defined(RC_INVOKED)
+#if (defined(_M_IA64) || defined(_M_AMD64))
     return InterlockedIncrement64(mem) - 1;
 #else
-    return InterlockedIncrement64((long *)mem) - 1;
+    return InterlockedIncrement64((LONG64 *)mem) - 1;
 #endif
 }
 
 APR_DECLARE(apr_uint64_t) apr_atomic_dec64(volatile apr_uint64_t *mem)
 {
-#if (defined(_M_IA64) || defined(_M_AMD64)) && !defined(RC_INVOKED)
+#if (defined(_M_IA64) || defined(_M_AMD64))
     return InterlockedDecrement64(mem);
 #else
-    return InterlockedDecrement64((long *)mem);
+    return InterlockedDecrement64((LONG64 *)mem);
 #endif
 }
 
 APR_DECLARE(void) apr_atomic_set64(volatile apr_uint64_t *mem, apr_uint64_t val)
 {
-#if (defined(_M_IA64) || defined(_M_AMD64)) && !defined(RC_INVOKED)
+#if (defined(_M_IA64) || defined(_M_AMD64))
     InterlockedExchange64(mem, val);
 #else
-    InterlockedExchange64((long*)mem, val);
+    InterlockedExchange64((LONG64 *)mem, val);
 #endif
 }
 
@@ -77,18 +77,18 @@ APR_DECLARE(apr_uint64_t) apr_atomic_read64(volatile apr_uint64_t *mem)
 APR_DECLARE(apr_uint64_t) apr_atomic_cas64(volatile apr_uint64_t *mem, apr_uint64_t with,
                                            apr_uint64_t cmp)
 {
-#if (defined(_M_IA64) || defined(_M_AMD64)) && !defined(RC_INVOKED)
+#if (defined(_M_IA64) || defined(_M_AMD64))
     return InterlockedCompareExchange64(mem, with, cmp);
 #else
-    return InterlockedCompareExchange64((long*)mem, with, cmp);
+    return InterlockedCompareExchange64((LONG64 *)mem, with, cmp);
 #endif
 }
 
 APR_DECLARE(apr_uint64_t) apr_atomic_xchg64(volatile apr_uint64_t *mem, apr_uint64_t val)
 {
-#if (defined(_M_IA64) || defined(_M_AMD64)) && !defined(RC_INVOKED)
+#if (defined(_M_IA64) || defined(_M_AMD64))
     return InterlockedExchange64(mem, val);
 #else
-    return InterlockedExchange64((long *)mem, val);
+    return InterlockedExchange64((LONG64 *)mem, val);
 #endif
 }
