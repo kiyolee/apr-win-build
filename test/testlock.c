@@ -345,12 +345,26 @@ static void test_timeoutcond(abts_case *tc, void *data)
 }
 
 #if APR_HAS_TIMEDLOCKS
+#ifdef WIN32
+static void *APR_THREAD_FUNC thread_timeoutmutex_holder(apr_thread_t *thd, void *data)
+{
+    ((int *)data)[0] = apr_thread_mutex_lock(timeout_mutex);
+    apr_sleep(apr_time_from_msec(5200));
+    ((int *)data)[1] = apr_thread_mutex_unlock(timeout_mutex);
+    return NULL;
+}
+#endif
+
 static void test_timeoutmutex(abts_case *tc, void *data)
 {
     apr_status_t s;
     apr_interval_time_t timeout;
     apr_time_t begin, end;
     int i;
+#ifdef WIN32
+    apr_thread_t *t;
+    int ts[2] = { -1, -1 };
+#endif
 
     s = apr_thread_mutex_create(&timeout_mutex, APR_THREAD_MUTEX_TIMED, p);
     ABTS_INT_EQUAL(tc, APR_SUCCESS, s);
@@ -358,7 +372,13 @@ static void test_timeoutmutex(abts_case *tc, void *data)
 
     timeout = apr_time_from_sec(5);
 
-    ABTS_INT_EQUAL(tc, 0, apr_thread_mutex_lock(timeout_mutex));
+#ifdef WIN32
+    s = apr_thread_create(&t, NULL, thread_timeoutmutex_holder, ts, p);
+    ABTS_INT_EQUAL(tc, APR_SUCCESS, s);
+    apr_sleep(apr_time_from_msec(100));
+#else
+    ABTS_INT_EQUAL(tc, APR_SUCCESS, apr_thread_mutex_lock(timeout_mutex));
+#endif
     for (i = 0; i < MAX_RETRY; i++) {
         begin = apr_time_now();
         s = apr_thread_mutex_timedlock(timeout_mutex, timeout);
@@ -372,7 +392,13 @@ static void test_timeoutmutex(abts_case *tc, void *data)
         break;
     }
     ABTS_ASSERT(tc, "Too many retries", i < MAX_RETRY);
-    ABTS_INT_EQUAL(tc, 0, apr_thread_mutex_unlock(timeout_mutex));
+#ifdef WIN32
+    apr_thread_join(&s, t);
+    ABTS_INT_EQUAL(tc, APR_SUCCESS, ts[0]); 
+    ABTS_INT_EQUAL(tc, APR_SUCCESS, ts[1]); 
+#else
+    ABTS_INT_EQUAL(tc, APR_SUCCESS, apr_thread_mutex_unlock(timeout_mutex));
+#endif
     APR_ASSERT_SUCCESS(tc, "Unable to destroy the mutex",
                        apr_thread_mutex_destroy(timeout_mutex));
 }
