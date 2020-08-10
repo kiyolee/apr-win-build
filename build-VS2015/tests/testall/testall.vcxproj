@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\test\abts.c" />
+    <ClCompile Include="..\..\..\test\testargs.c" />
+    <ClCompile Include="..\..\..\test\testatomic.c" />
+    <ClCompile Include="..\..\..\test\testcond.c" />
+    <ClCompile Include="..\..\..\test\testdir.c" />
+    <ClCompile Include="..\..\..\test\testdso.c" />
+    <ClCompile Include="..\..\..\test\testdup.c" />
+    <ClCompile Include="..\..\..\test\testencode.c" />
+    <ClCompile Include="..\..\..\test\testenv.c" />
+    <ClCompile Include="..\..\..\test\testescape.c" />
+    <ClCompile Include="..\..\..\test\testfile.c" />
+    <ClCompile Include="..\..\..\test\testfilecopy.c" />
+    <ClCompile Include="..\..\..\test\testfileinfo.c" />
+    <ClCompile Include="..\..\..\test\testflock.c" />
+    <ClCompile Include="..\..\..\test\testfmt.c" />
+    <ClCompile Include="..\..\..\test\testfnmatch.c" />
+    <ClCompile Include="..\..\..\test\testglobalmutex.c" />
+    <ClCompile Include="..\..\..\test\testhash.c" />
+    <ClCompile Include="..\..\..\test\testipsub.c" />
+    <ClCompile Include="..\..\..\test\testlfs.c" />
+    <ClCompile Include="..\..\..\test\testlock.c" />
+    <ClCompile Include="..\..\..\test\testmmap.c" />
+    <ClCompile Include="..\..\..\test\testnames.c" />
+    <ClCompile Include="..\..\..\test\testoc.c" />
+    <ClCompile Include="..\..\..\test\testpath.c" />
+    <ClCompile Include="..\..\..\test\testpipe.c" />
+    <ClCompile Include="..\..\..\test\testpoll.c" />
+    <ClCompile Include="..\..\..\test\testpools.c" />
+    <ClCompile Include="..\..\..\test\testproc.c" />
+    <ClCompile Include="..\..\..\test\testprocmutex.c" />
+    <ClCompile Include="..\..\..\test\testrand.c" />
+    <ClCompile Include="..\..\..\test\testshm.c" />
+    <ClCompile Include="..\..\..\test\testskiplist.c" />
+    <ClCompile Include="..\..\..\test\testsleep.c" />
+    <ClCompile Include="..\..\..\test\testsock.c" />
+    <ClCompile Include="..\..\..\test\testsockets.c" />
+    <ClCompile Include="..\..\..\test\testsockopt.c" />
+    <ClCompile Include="..\..\..\test\teststr.c" />
+    <ClCompile Include="..\..\..\test\teststrnatcmp.c" />
+    <ClCompile Include="..\..\..\test\testtable.c" />
+    <ClCompile Include="..\..\..\test\testtemp.c" />
+    <ClCompile Include="..\..\..\test\testthread.c" />
+    <ClCompile Include="..\..\..\test\testtime.c" />
+    <ClCompile Include="..\..\..\test\testud.c" />
+    <ClCompile Include="..\..\..\test\testuser.c" />
+    <ClCompile Include="..\..\..\test\testutil.c" />
+    <ClCompile Include="..\..\..\test\testvsn.c" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{10F7B024-B56B-42A3-BD68-1F9BC3F17CB0}</ProjectGuid>
+    <RootNamespace>testall</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\_props\testapp.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\_props\testapp.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\_props\testapp.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\_props\testapp.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link />
+    <Link>
+      <AdditionalDependencies>ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link />
+    <Link>
+      <AdditionalDependencies>ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link />
+    <Link>
+      <AdditionalDependencies>ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link />
+    <Link>
+      <AdditionalDependencies>ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
