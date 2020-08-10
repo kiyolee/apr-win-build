@@ -334,7 +334,7 @@ APR_DECLARE(apr_status_t) apr_dir_make_recursive(const char *path,
     rv = apr_dir_make (path, perm, pool); /* Try to make PATH right out */
 
     if (APR_STATUS_IS_ENOENT(rv)) { /* Missing an intermediate dir */
-        char *dir;
+        char *dir = NULL;
 
         rv = apr_filepath_merge(&dir, "", path, APR_FILEPATH_NATIVE, pool);
 

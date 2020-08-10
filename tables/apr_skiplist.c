@@ -264,7 +264,7 @@ APR_DECLARE(void) apr_skiplist_add_index(apr_skiplist *sl,
                         apr_skiplist_compare compk)
 {
     apr_skiplistnode *m;
-    apr_skiplist *ni;
+    apr_skiplist *ni = NULL;
     int icount = 0;
     apr_skiplist_find(sl->index, (void *)comp, &m);
     if (m) {
