@@ -18,9 +18,6 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\..\test\mod_test.c" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{4B7F0463-1413-44F1-B924-AE7ABECC3A56}</ProjectGuid>
     <RootNamespace>mod_test</RootNamespace>
@@ -107,6 +104,9 @@
       <AdditionalOptions>/export:print_hello /export:count_reps %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\test\mod_test.c" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

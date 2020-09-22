@@ -18,9 +18,6 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\..\test\occhild.c" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{93E0CCD0-C8EA-49A6-864E-898EA37EE48A}</ProjectGuid>
     <RootNamespace>occhild</RootNamespace>
@@ -91,6 +88,9 @@
     </ClCompile>
     <Link />
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\test\occhild.c" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

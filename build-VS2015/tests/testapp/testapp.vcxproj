@@ -18,9 +18,6 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\..\test\testapp.c" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B4EA3BDB-71CA-40E6-AABB-7D78D273E228}</ProjectGuid>
     <RootNamespace>testapp</RootNamespace>
@@ -95,6 +92,9 @@
     </ClCompile>
     <Link />
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\test\testapp.c" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

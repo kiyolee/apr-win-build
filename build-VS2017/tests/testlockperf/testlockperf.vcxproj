@@ -18,9 +18,6 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\..\test\testlockperf.c" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{5DF2ABAD-3DD4-4482-A841-6ADD989BBB4F}</ProjectGuid>
     <RootNamespace>testlockperf</RootNamespace>
@@ -95,6 +92,9 @@
     </ClCompile>
     <Link />
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\test\testlockperf.c" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

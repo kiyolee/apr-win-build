@@ -18,9 +18,6 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\..\test\proc_child.c" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{6E168A4C-C996-4214-A7F6-EC01D7B70347}</ProjectGuid>
     <RootNamespace>proc_child</RootNamespace>
@@ -95,6 +92,9 @@
     </ClCompile>
     <Link />
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\test\proc_child.c" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

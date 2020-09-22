@@ -18,9 +18,6 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\tools\gen_test_char.c" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{EF0062D0-A788-47FD-910B-321D3A929CA6}</ProjectGuid>
     <RootNamespace>_gen_test_char</RootNamespace>
@@ -103,6 +100,9 @@ $(TargetPath) &gt; $(OutDir)_work\apr_escape_test_char.h</Command>
 $(TargetPath) &gt; $(OutDir)_work\apr_escape_test_char.h</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\tools\gen_test_char.c" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

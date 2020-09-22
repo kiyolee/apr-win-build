@@ -18,55 +18,6 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\..\test\abts.c" />
-    <ClCompile Include="..\..\..\test\testargs.c" />
-    <ClCompile Include="..\..\..\test\testatomic.c" />
-    <ClCompile Include="..\..\..\test\testcond.c" />
-    <ClCompile Include="..\..\..\test\testdir.c" />
-    <ClCompile Include="..\..\..\test\testdso.c" />
-    <ClCompile Include="..\..\..\test\testdup.c" />
-    <ClCompile Include="..\..\..\test\testencode.c" />
-    <ClCompile Include="..\..\..\test\testenv.c" />
-    <ClCompile Include="..\..\..\test\testescape.c" />
-    <ClCompile Include="..\..\..\test\testfile.c" />
-    <ClCompile Include="..\..\..\test\testfilecopy.c" />
-    <ClCompile Include="..\..\..\test\testfileinfo.c" />
-    <ClCompile Include="..\..\..\test\testflock.c" />
-    <ClCompile Include="..\..\..\test\testfmt.c" />
-    <ClCompile Include="..\..\..\test\testfnmatch.c" />
-    <ClCompile Include="..\..\..\test\testglobalmutex.c" />
-    <ClCompile Include="..\..\..\test\testhash.c" />
-    <ClCompile Include="..\..\..\test\testipsub.c" />
-    <ClCompile Include="..\..\..\test\testlfs.c" />
-    <ClCompile Include="..\..\..\test\testlock.c" />
-    <ClCompile Include="..\..\..\test\testmmap.c" />
-    <ClCompile Include="..\..\..\test\testnames.c" />
-    <ClCompile Include="..\..\..\test\testoc.c" />
-    <ClCompile Include="..\..\..\test\testpath.c" />
-    <ClCompile Include="..\..\..\test\testpipe.c" />
-    <ClCompile Include="..\..\..\test\testpoll.c" />
-    <ClCompile Include="..\..\..\test\testpools.c" />
-    <ClCompile Include="..\..\..\test\testproc.c" />
-    <ClCompile Include="..\..\..\test\testprocmutex.c" />
-    <ClCompile Include="..\..\..\test\testrand.c" />
-    <ClCompile Include="..\..\..\test\testshm.c" />
-    <ClCompile Include="..\..\..\test\testskiplist.c" />
-    <ClCompile Include="..\..\..\test\testsleep.c" />
-    <ClCompile Include="..\..\..\test\testsock.c" />
-    <ClCompile Include="..\..\..\test\testsockets.c" />
-    <ClCompile Include="..\..\..\test\testsockopt.c" />
-    <ClCompile Include="..\..\..\test\teststr.c" />
-    <ClCompile Include="..\..\..\test\teststrnatcmp.c" />
-    <ClCompile Include="..\..\..\test\testtable.c" />
-    <ClCompile Include="..\..\..\test\testtemp.c" />
-    <ClCompile Include="..\..\..\test\testthread.c" />
-    <ClCompile Include="..\..\..\test\testtime.c" />
-    <ClCompile Include="..\..\..\test\testud.c" />
-    <ClCompile Include="..\..\..\test\testuser.c" />
-    <ClCompile Include="..\..\..\test\testutil.c" />
-    <ClCompile Include="..\..\..\test\testvsn.c" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{10F7B024-B56B-42A3-BD68-1F9BC3F17CB0}</ProjectGuid>
@@ -154,6 +105,55 @@
       <AdditionalDependencies>ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\test\abts.c" />
+    <ClCompile Include="..\..\..\test\testargs.c" />
+    <ClCompile Include="..\..\..\test\testatomic.c" />
+    <ClCompile Include="..\..\..\test\testcond.c" />
+    <ClCompile Include="..\..\..\test\testdir.c" />
+    <ClCompile Include="..\..\..\test\testdso.c" />
+    <ClCompile Include="..\..\..\test\testdup.c" />
+    <ClCompile Include="..\..\..\test\testencode.c" />
+    <ClCompile Include="..\..\..\test\testenv.c" />
+    <ClCompile Include="..\..\..\test\testescape.c" />
+    <ClCompile Include="..\..\..\test\testfile.c" />
+    <ClCompile Include="..\..\..\test\testfilecopy.c" />
+    <ClCompile Include="..\..\..\test\testfileinfo.c" />
+    <ClCompile Include="..\..\..\test\testflock.c" />
+    <ClCompile Include="..\..\..\test\testfmt.c" />
+    <ClCompile Include="..\..\..\test\testfnmatch.c" />
+    <ClCompile Include="..\..\..\test\testglobalmutex.c" />
+    <ClCompile Include="..\..\..\test\testhash.c" />
+    <ClCompile Include="..\..\..\test\testipsub.c" />
+    <ClCompile Include="..\..\..\test\testlfs.c" />
+    <ClCompile Include="..\..\..\test\testlock.c" />
+    <ClCompile Include="..\..\..\test\testmmap.c" />
+    <ClCompile Include="..\..\..\test\testnames.c" />
+    <ClCompile Include="..\..\..\test\testoc.c" />
+    <ClCompile Include="..\..\..\test\testpath.c" />
+    <ClCompile Include="..\..\..\test\testpipe.c" />
+    <ClCompile Include="..\..\..\test\testpoll.c" />
+    <ClCompile Include="..\..\..\test\testpools.c" />
+    <ClCompile Include="..\..\..\test\testproc.c" />
+    <ClCompile Include="..\..\..\test\testprocmutex.c" />
+    <ClCompile Include="..\..\..\test\testrand.c" />
+    <ClCompile Include="..\..\..\test\testshm.c" />
+    <ClCompile Include="..\..\..\test\testskiplist.c" />
+    <ClCompile Include="..\..\..\test\testsleep.c" />
+    <ClCompile Include="..\..\..\test\testsock.c" />
+    <ClCompile Include="..\..\..\test\testsockets.c" />
+    <ClCompile Include="..\..\..\test\testsockopt.c" />
+    <ClCompile Include="..\..\..\test\teststr.c" />
+    <ClCompile Include="..\..\..\test\teststrnatcmp.c" />
+    <ClCompile Include="..\..\..\test\testtable.c" />
+    <ClCompile Include="..\..\..\test\testtemp.c" />
+    <ClCompile Include="..\..\..\test\testthread.c" />
+    <ClCompile Include="..\..\..\test\testtime.c" />
+    <ClCompile Include="..\..\..\test\testud.c" />
+    <ClCompile Include="..\..\..\test\testuser.c" />
+    <ClCompile Include="..\..\..\test\testutil.c" />
+    <ClCompile Include="..\..\..\test\testvsn.c" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

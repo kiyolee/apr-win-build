@@ -18,9 +18,6 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\..\test\internal\testucs.c" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{A2DC5279-F28C-4119-8F38-7BF24D0B68FC}</ProjectGuid>
     <RootNamespace>testucs</RootNamespace>
@@ -95,6 +92,9 @@
     </ClCompile>
     <Link />
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\test\internal\testucs.c" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

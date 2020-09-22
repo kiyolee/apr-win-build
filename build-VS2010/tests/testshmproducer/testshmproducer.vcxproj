@@ -18,9 +18,6 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\..\test\testshmproducer.c" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7F60522E-7BC9-4529-A253-98266BC582C0}</ProjectGuid>
     <RootNamespace>testshmproducer</RootNamespace>
@@ -91,6 +88,9 @@
     </ClCompile>
     <Link />
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\test\testshmproducer.c" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

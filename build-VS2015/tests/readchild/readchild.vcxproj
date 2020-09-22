@@ -18,9 +18,6 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\..\test\readchild.c" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{4B77D321-E49F-464C-9D11-80C84E1C63CA}</ProjectGuid>
     <RootNamespace>readchild</RootNamespace>
@@ -95,6 +92,9 @@
     </ClCompile>
     <Link />
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\test\readchild.c" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
