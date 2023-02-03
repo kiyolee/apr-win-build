@@ -110,7 +110,11 @@ typedef enum {
     APR_WIN_XP_SP2 =   62,
     APR_WIN_2003 =     70,
     APR_WIN_VISTA =    80,
-    APR_WIN_7 =        90
+    APR_WIN_7 =        90,
+    APR_WIN_7_SP1 =    91,
+    APR_WIN_8  =       100,
+    APR_WIN_8_1 =      110,
+    APR_WIN_10 =       120
 } apr_oslevel_e;
 
 extern APR_DECLARE_DATA apr_oslevel_e apr_os_level;
@@ -486,6 +490,7 @@ APR_DECLARE_LATE_DLL_FUNC(DLL_WINBASEAPI, BOOL, WINAPI, SetDllDirectoryW, 0, (
     (lpPathName));
 #define SetDllDirectoryW apr_winapi_SetDllDirectoryW
 
+#if HAVE_IF_NAMETOINDEX
 #ifdef if_nametoindex
 #undef if_nametoindex
 #endif
@@ -493,7 +498,9 @@ APR_DECLARE_LATE_DLL_FUNC(DLL_IPHLPAPI, NET_IFINDEX, WINAPI, if_nametoindex, 0, 
     IN PCSTR InterfaceName),
     (InterfaceName));
 #define if_nametoindex apr_winapi_if_nametoindex
+#endif
 
+#if HAVE_IF_INDEXTONAME
 #ifdef if_indextoname
 #undef if_indextoname
 #endif
@@ -502,6 +509,7 @@ APR_DECLARE_LATE_DLL_FUNC(DLL_IPHLPAPI, PCHAR, NETIOAPI_API_, if_indextoname, 0,
     PCHAR       InterfaceName),
     (InterfaceIndex, InterfaceName));
 #define if_indextoname apr_winapi_if_indextoname
+#endif
 
 #endif /* !defined(_WIN32_WCE) */
 

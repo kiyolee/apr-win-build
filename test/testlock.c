@@ -22,6 +22,7 @@
 #include "apr_errno.h"
 #include "apr_general.h"
 #include "apr_getopt.h"
+#include "apr_atomic.h"
 #include "testutil.h"
 
 #if APR_HAS_THREADS
@@ -32,6 +33,7 @@
 
 static void *APR_THREAD_FUNC thread_rwlock_func(apr_thread_t *thd, void *data);
 static void *APR_THREAD_FUNC thread_mutex_function(apr_thread_t *thd, void *data);
+static void *APR_THREAD_FUNC thread_mutex_sleep_function(apr_thread_t *thd, void *data);
 static void *APR_THREAD_FUNC thread_cond_producer(apr_thread_t *thd, void *data);
 static void *APR_THREAD_FUNC thread_cond_consumer(apr_thread_t *thd, void *data);
 
@@ -108,6 +110,35 @@ static void *APR_THREAD_FUNC thread_mutex_function(apr_thread_t *thd, void *data
         if (!exitLoop)
             break;
     }
+    return NULL;
+}
+
+/* Sleepy-loop until f_ value matches val: */
+#define wait_for_flag(f_, val) while (apr_atomic_read32(&(f_)) != val) apr_sleep(100000)
+
+/* Helper function.  Passed (apr_uint32_t *) flag as data, sets flag
+ * to one, locks the timeout_mutex, waits for *flag to be set to zero
+ * and terminates.  The co-ordination could also be done via mutexes
+ * but since we're timedlocking timeout_mutex it would look like a
+ * deadlock to a mutex implementation which detects deadlocks. */
+static void *APR_THREAD_FUNC thread_mutex_sleep_function(apr_thread_t *thd, void *data)
+{
+    apr_uint32_t *flag = data;
+    apr_status_t rv;
+
+    rv = apr_thread_mutex_lock(timeout_mutex);
+    if (rv) {
+        fprintf(stderr, "testlock: failed to lock timeout mutex, errno %d\n", rv);
+        apr_thread_exit(thd, rv);
+    }
+
+    apr_atomic_set32(flag, 1);
+
+    wait_for_flag(*flag, 0);
+
+    rv = apr_thread_mutex_unlock(timeout_mutex);
+
+    apr_thread_exit(thd, APR_SUCCESS);
     return NULL;
 } 
 
@@ -344,41 +375,35 @@ static void test_timeoutcond(abts_case *tc, void *data)
                        apr_thread_cond_destroy(timeout_cond));
 }
 
+/* Test whether _timedlock times out appropriately.  Since
+ * double-locking a non-recursive mutex has undefined behaviour, and
+ * double-locking a recursive mutex succeeds immediately, a thread is
+ * spawned to hold the lock while this thread tests whether _timedlock
+ * times out. */
 #if APR_HAS_TIMEDLOCKS
-#ifdef WIN32
-static void *APR_THREAD_FUNC thread_timeoutmutex_holder(apr_thread_t *thd, void *data)
-{
-    ((int *)data)[0] = apr_thread_mutex_lock(timeout_mutex);
-    apr_sleep(apr_time_from_msec(5200));
-    ((int *)data)[1] = apr_thread_mutex_unlock(timeout_mutex);
-    return NULL;
-}
-#endif
-
 static void test_timeoutmutex(abts_case *tc, void *data)
 {
     apr_status_t s;
     apr_interval_time_t timeout;
     apr_time_t begin, end;
+    apr_thread_t *th;
+    apr_uint32_t flag = 0;
     int i;
-#ifdef WIN32
-    apr_thread_t *t;
-    int ts[2] = { -1, -1 };
-#endif
 
-    s = apr_thread_mutex_create(&timeout_mutex, APR_THREAD_MUTEX_TIMED, p);
+    s = apr_thread_mutex_create(&timeout_mutex,
+                                APR_THREAD_MUTEX_TIMED |
+                                APR_THREAD_MUTEX_UNNESTED, p);
     ABTS_INT_EQUAL(tc, APR_SUCCESS, s);
     ABTS_PTR_NOTNULL(tc, timeout_mutex);
 
+    s = apr_thread_create(&th, NULL, thread_mutex_sleep_function, &flag, p);
+    ABTS_INT_EQUAL(tc, APR_SUCCESS, s);
+
+    wait_for_flag(flag, 1); /* the thread will set flag to 1 once the
+                             * timeout_mutex is locked. */
+    
     timeout = apr_time_from_sec(5);
 
-#ifdef WIN32
-    s = apr_thread_create(&t, NULL, thread_timeoutmutex_holder, ts, p);
-    ABTS_INT_EQUAL(tc, APR_SUCCESS, s);
-    apr_sleep(apr_time_from_msec(100));
-#else
-    ABTS_INT_EQUAL(tc, APR_SUCCESS, apr_thread_mutex_lock(timeout_mutex));
-#endif
     for (i = 0; i < MAX_RETRY; i++) {
         begin = apr_time_now();
         s = apr_thread_mutex_timedlock(timeout_mutex, timeout);
@@ -391,17 +416,105 @@ static void test_timeoutmutex(abts_case *tc, void *data)
         ABTS_ASSERT(tc, "Timer returned too late", end - begin - timeout < 1000000);
         break;
     }
+
+    apr_atomic_set32(&flag, 0); /* tell the thread to exit.  */
+
+    APR_ASSERT_SUCCESS(tc, "join spawned thread", apr_thread_join(&s, th));
+    APR_ASSERT_SUCCESS(tc, "spawned thread terminated", s);
+
     ABTS_ASSERT(tc, "Too many retries", i < MAX_RETRY);
-#ifdef WIN32
-    apr_thread_join(&s, t);
-    ABTS_INT_EQUAL(tc, APR_SUCCESS, ts[0]); 
-    ABTS_INT_EQUAL(tc, APR_SUCCESS, ts[1]); 
-#else
-    ABTS_INT_EQUAL(tc, APR_SUCCESS, apr_thread_mutex_unlock(timeout_mutex));
-#endif
-    APR_ASSERT_SUCCESS(tc, "Unable to destroy the mutex",
+    APR_ASSERT_SUCCESS(tc, "Unable to destroy the timeout mutex",
                        apr_thread_mutex_destroy(timeout_mutex));
 }
+#endif
+
+static void test_thread_nestedmutex(abts_case *tc, void *data)
+{
+    apr_thread_mutex_t *m;
+    apr_status_t rv;
+
+    rv = apr_thread_mutex_create(&m, APR_THREAD_MUTEX_NESTED, p);
+    ABTS_INT_EQUAL(tc, APR_SUCCESS, rv);
+    ABTS_PTR_NOTNULL(tc, m);
+
+    rv = apr_thread_mutex_lock(m);
+    ABTS_INT_EQUAL(tc, APR_SUCCESS, rv);
+
+    rv = apr_thread_mutex_trylock(m);
+    ABTS_INT_EQUAL(tc, APR_SUCCESS, rv);
+    if (rv == APR_SUCCESS)
+    {
+        rv = apr_thread_mutex_unlock(m);
+        ABTS_INT_EQUAL(tc, APR_SUCCESS, rv);
+    }
+
+    rv = apr_thread_mutex_unlock(m);
+    ABTS_INT_EQUAL(tc, APR_SUCCESS, rv);
+}
+
+static void test_thread_unnestedmutex(abts_case *tc, void *data)
+{
+    apr_thread_mutex_t *m;
+    apr_status_t rv;
+
+    rv = apr_thread_mutex_create(&m, APR_THREAD_MUTEX_UNNESTED, p);
+    ABTS_INT_EQUAL(tc, APR_SUCCESS, rv);
+    ABTS_PTR_NOTNULL(tc, m);
+
+    rv = apr_thread_mutex_lock(m);
+    ABTS_INT_EQUAL(tc, APR_SUCCESS, rv);
+
+    rv = apr_thread_mutex_trylock(m);
+    ABTS_INT_EQUAL(tc, APR_EBUSY, rv);
+    if (rv == APR_SUCCESS)
+    {
+        rv = apr_thread_mutex_unlock(m);
+        ABTS_INT_EQUAL(tc, APR_SUCCESS, rv);
+    }
+
+    rv = apr_thread_mutex_unlock(m);
+    ABTS_INT_EQUAL(tc, APR_SUCCESS, rv);
+}
+
+#ifdef WIN32
+static void *APR_THREAD_FUNC
+thread_win32_abandoned_mutex_function(apr_thread_t *thd, void *data)
+{
+    apr_thread_mutex_t *mutex = data;
+    apr_status_t rv;
+
+    rv = apr_thread_mutex_lock(mutex);
+
+    /* exit from thread without unlocking mutex. */
+    apr_thread_exit(thd, rv);
+
+    return NULL;
+}
+
+static void test_win32_abandoned_mutex(abts_case *tc, void *data)
+{
+    apr_status_t rv;
+    apr_thread_t *thread;
+    apr_thread_mutex_t *mutex;
+
+    /* Create timed mutex: APR will create Win32 mutex object in this case. */
+    rv = apr_thread_mutex_create(&mutex, APR_THREAD_MUTEX_TIMED, p);
+    ABTS_INT_EQUAL(tc, APR_SUCCESS, rv);
+
+    rv = apr_thread_create(&thread, NULL, thread_win32_abandoned_mutex_function,
+                           mutex, p);
+    ABTS_INT_EQUAL(tc, APR_SUCCESS, rv);
+
+    apr_thread_join(&rv, thread);
+    ABTS_INT_EQUAL(tc, APR_SUCCESS, rv);
+
+    rv = apr_thread_mutex_trylock(mutex);
+    ABTS_INT_EQUAL(tc, APR_SUCCESS, rv);
+
+    rv = apr_thread_mutex_unlock (mutex);
+    ABTS_INT_EQUAL(tc, APR_SUCCESS, rv);
+}
+
 #endif
 
 #endif /* !APR_HAS_THREADS */
@@ -425,11 +538,16 @@ abts_suite *testlock(abts_suite *suite)
 #if APR_HAS_TIMEDLOCKS
     abts_run_test(suite, test_thread_timedmutex, NULL);
 #endif
+    abts_run_test(suite, test_thread_nestedmutex, NULL);
+    abts_run_test(suite, test_thread_unnestedmutex, NULL);
     abts_run_test(suite, test_thread_rwlock, NULL);
     abts_run_test(suite, test_cond, NULL);
     abts_run_test(suite, test_timeoutcond, NULL);
 #if APR_HAS_TIMEDLOCKS
     abts_run_test(suite, test_timeoutmutex, NULL);
+#endif
+#ifdef WIN32
+    abts_run_test(suite, test_win32_abandoned_mutex, NULL);
 #endif
 #endif
 

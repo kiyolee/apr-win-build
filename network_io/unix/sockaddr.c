@@ -118,6 +118,15 @@ static apr_status_t get_remote_addr(apr_socket_t *sock)
 APR_DECLARE(apr_status_t) apr_sockaddr_ip_getbuf(char *buf, apr_size_t buflen,
                                                  apr_sockaddr_t *sockaddr)
 {
+#if APR_HAVE_SOCKADDR_UN
+    if (sockaddr->family == APR_UNIX) {
+        const char *ptr = sockaddr->ipaddr_ptr;
+        apr_size_t len = apr_cpystrn(buf, ptr, buflen) - buf;
+        /* assumes that sockaddr->ipaddr_ptr is nul terminated */
+        return ptr[len] ? APR_ENOSPC : APR_SUCCESS;
+    }
+#endif
+
     if (!apr_inet_ntop(sockaddr->family, sockaddr->ipaddr_ptr, buf, buflen)) {
         return APR_ENOSPC;
     }

@@ -90,7 +90,7 @@ static void test_xchgptr(abts_case *tc, void *data)
 
     old_ptr = apr_atomic_xchgptr(&target_ptr, &a);
     ABTS_PTR_EQUAL(tc, ref, old_ptr);
-    ABTS_PTR_EQUAL(tc, &a, (void *) target_ptr);
+    ABTS_PTR_EQUAL(tc, (void *)&a, (void *)target_ptr);
 }
 
 static void test_cas_equal(abts_case *tc, void *data)
@@ -125,35 +125,35 @@ static void test_cas_notequal(abts_case *tc, void *data)
 
 static void test_casptr_equal(abts_case *tc, void *data)
 {
-    int a;
+    int a = 0;
     volatile void *target_ptr = NULL;
     void *old_ptr;
 
     old_ptr = apr_atomic_casptr(&target_ptr, &a, NULL);
     ABTS_PTR_EQUAL(tc, NULL, old_ptr);
-    ABTS_PTR_EQUAL(tc, &a, (void *) target_ptr);
+    ABTS_PTR_EQUAL(tc, (void *)&a, (void *)target_ptr);
 }
 
 static void test_casptr_equal_nonnull(abts_case *tc, void *data)
 {
-    int a, b;
+    int a = 0, b = 0;
     volatile void *target_ptr = &a;
     void *old_ptr;
 
     old_ptr = apr_atomic_casptr(&target_ptr, &b, &a);
-    ABTS_PTR_EQUAL(tc, &a, old_ptr);
-    ABTS_PTR_EQUAL(tc, &b, (void *) target_ptr);
+    ABTS_PTR_EQUAL(tc, (void *)&a, old_ptr);
+    ABTS_PTR_EQUAL(tc, (void *)&b, (void *)target_ptr);
 }
 
 static void test_casptr_notequal(abts_case *tc, void *data)
 {
-    int a, b;
+    int a = 0, b = 0;
     volatile void *target_ptr = &a;
     void *old_ptr;
 
     old_ptr = apr_atomic_casptr(&target_ptr, &a, &b);
-    ABTS_PTR_EQUAL(tc, &a, old_ptr);
-    ABTS_PTR_EQUAL(tc, &a, (void *) target_ptr);
+    ABTS_PTR_EQUAL(tc, (void *)&a, old_ptr);
+    ABTS_PTR_EQUAL(tc, (void *)&a, (void *)target_ptr);
 }
 
 static void test_add32(abts_case *tc, void *data)
@@ -876,6 +876,43 @@ static void test_atomics_busyloop_threaded64(abts_case *tc, void *data)
     ABTS_ASSERT(tc, "Failed creating threads", rv == APR_SUCCESS);
 }
 
+static void *APR_THREAD_FUNC test_func_set64(apr_thread_t *thd, void *data)
+{
+    int i;
+
+    for (i = 0; i < 1000 * 1000; i++) {
+        apr_atomic_set64(&atomic_ops64, APR_UINT64_C(0x1111222233334444));
+        apr_atomic_set64(&atomic_ops64, APR_UINT64_C(0x4444555566667777));
+    }
+
+    apr_thread_exit(thd, APR_SUCCESS);
+    return NULL;
+}
+
+static void test_atomics_threaded_setread64(abts_case *tc, void *data)
+{
+    apr_status_t retval;
+    apr_thread_t *thread;
+    int i;
+
+    apr_atomic_set64(&atomic_ops64, APR_UINT64_C(0x1111222233334444));
+
+    apr_thread_create(&thread, NULL, test_func_set64, NULL, p);
+
+    for (i = 0; i < 1000 * 1000 * 2; i++) {
+        apr_uint64_t val = apr_atomic_read64(&atomic_ops64);
+
+        if (val != APR_UINT64_C(0x1111222233334444) &&
+            val != APR_UINT64_C(0x4444555566667777))
+        {
+            ABTS_FAIL(tc, "Unexpected value");
+            break;
+        }
+    }
+
+    apr_thread_join(&retval, thread);
+}
+
 #endif /* !APR_HAS_THREADS */
 
 abts_suite *testatomic(abts_suite *suite)
@@ -916,6 +953,7 @@ abts_suite *testatomic(abts_suite *suite)
     abts_run_test(suite, test_atomics_threaded64, NULL);
     abts_run_test(suite, test_atomics_busyloop_threaded, NULL);
     abts_run_test(suite, test_atomics_busyloop_threaded64, NULL);
+    abts_run_test(suite, test_atomics_threaded_setread64, NULL);
 #endif
 
     return suite;

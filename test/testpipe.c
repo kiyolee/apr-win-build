@@ -158,18 +158,10 @@ static void test_pipe_writefull(abts_case *tc, void *data)
     ABTS_INT_EQUAL(tc, APR_SUCCESS, rv);
 
     rv = apr_file_pipe_timeout_set(proc.in, apr_time_from_sec(10));
-#ifdef WIN32
-    ABTS_INT_EQUAL(tc, APR_EINVAL, rv);
-#else
     ABTS_INT_EQUAL(tc, APR_SUCCESS, rv);
-#endif
 
     rv = apr_file_pipe_timeout_set(proc.out, apr_time_from_sec(10));
-#ifdef WIN32
-    ABTS_INT_EQUAL(tc, APR_EINVAL, rv);
-#else
     ABTS_INT_EQUAL(tc, APR_SUCCESS, rv);
-#endif
 
     i = iterations;
     do {

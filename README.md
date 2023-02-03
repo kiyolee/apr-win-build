@@ -2,7 +2,7 @@
 
 Apache apr Windows build with Visual Studio.
 
-This version is apr-1.7.0.
+This version is apr-1.7.2.
 
 To build, simply open the required solution file, and
 you know how to use Visual Studio, right?
