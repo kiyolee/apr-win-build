@@ -529,13 +529,14 @@ APR_DECLARE(apr_status_t) apr_file_flush(apr_file_t *thefile)
 
 APR_DECLARE(apr_status_t) apr_file_sync(apr_file_t *thefile){
     apr_status_t rv;
+    DWORD mode;
 
     rv = apr_file_flush(thefile);
     if (rv != APR_SUCCESS) {
         return rv;
     }
 
-    if (!FlushFileBuffers(thefile->filehand)) {
+    if (!FlushFileBuffers(thefile->filehand) && !GetConsoleMode(thefile->filehand, &mode)) {
         rv = apr_get_os_error();
     }
 
