@@ -11,7 +11,7 @@
       <PreprocessorDefinitions>WIN32;_WINDOWS;APR_DECLARE_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>setargv.obj;$(OutDir)apr-1.lib;rpcrt4.lib;mswsock.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>setargv.obj;$(OutDir)apr-1.lib;rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -20,7 +20,7 @@
       <PreprocessorDefinitions>WIN32;_WINDOWS;APR_DECLARE_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>setargv.obj;$(OutDir)apr-1.lib;rpcrt4.lib;mswsock.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>setargv.obj;$(OutDir)apr-1.lib;rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -29,7 +29,7 @@
       <PreprocessorDefinitions>WIN32;_WINDOWS;APR_DECLARE_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>setargv.obj;$(OutDir)apr-1.lib;rpcrt4.lib;mswsock.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>setargv.obj;$(OutDir)apr-1.lib;rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -38,7 +38,7 @@
       <PreprocessorDefinitions>WIN32;_WINDOWS;APR_DECLARE_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>setargv.obj;$(OutDir)apr-1.lib;rpcrt4.lib;mswsock.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>setargv.obj;$(OutDir)apr-1.lib;rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup />
