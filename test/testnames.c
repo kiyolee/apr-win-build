@@ -27,6 +27,10 @@
 #include <direct.h>
 #endif
 
+#ifdef _MSC_VER
+#define chdir _chdir
+#endif
+
 #if defined(WIN32) || defined(OS2)
 #define ABS_ROOT "C:/"
 #elif defined(NETWARE)

@@ -287,10 +287,9 @@ APR_DECLARE(apr_status_t) apr_shm_create(apr_shm_t **m,
         status = APR_SUCCESS;
     
 #if APR_USE_SHMEM_MMAP_TMP
-        /* FIXME: Is APR_OS_DEFAULT sufficient? */
-        status = apr_file_open(&file, filename, 
-                               APR_READ | APR_WRITE | APR_CREATE | APR_EXCL,
-                               APR_OS_DEFAULT, pool);
+        status = apr_file_open(&file, filename,
+                               APR_FOPEN_READ | APR_FOPEN_WRITE | APR_FOPEN_CREATE | APR_FOPEN_EXCL,
+                               APR_FPROT_UREAD | APR_FPROT_UWRITE, pool);
         if (status != APR_SUCCESS) {
             return status;
         }
@@ -319,8 +318,7 @@ APR_DECLARE(apr_status_t) apr_shm_create(apr_shm_t **m,
         }
 #endif /* APR_USE_SHMEM_MMAP_TMP */
 #if APR_USE_SHMEM_MMAP_SHM
-        /* FIXME: SysV uses 0600... should we? */
-        tmpfd = shm_open(shm_name, O_RDWR | O_CREAT | O_EXCL, 0644);
+        tmpfd = shm_open(shm_name, O_RDWR | O_CREAT | O_EXCL, 0600);
         if (tmpfd == -1) {
             return errno;
         }
@@ -361,10 +359,9 @@ APR_DECLARE(apr_status_t) apr_shm_create(apr_shm_t **m,
 #elif APR_USE_SHMEM_SHMGET
         new_m->realsize = reqsize;
 
-        /* FIXME: APR_OS_DEFAULT is too permissive, switch to 600 I think. */
-        status = apr_file_open(&file, filename, 
+        status = apr_file_open(&file, filename,
                                APR_FOPEN_WRITE | APR_FOPEN_CREATE | APR_FOPEN_EXCL,
-                               APR_OS_DEFAULT, pool);
+                               APR_FPROT_UREAD | APR_FPROT_UWRITE, pool);
         if (status != APR_SUCCESS) {
             return status;
         }
@@ -555,8 +552,7 @@ APR_DECLARE(apr_status_t) apr_shm_attach(apr_shm_t **m,
 #if APR_USE_SHMEM_MMAP_SHM
         const char *shm_name = make_shm_open_safe_name(filename, pool);
 
-        /* FIXME: SysV uses 0600... should we? */
-        tmpfd = shm_open(shm_name, O_RDWR, 0644);
+        tmpfd = shm_open(shm_name, O_RDWR, 0600);
         if (tmpfd == -1) {
             return errno;
         }
@@ -708,6 +704,49 @@ APR_PERMS_SET_IMPLEMENT(shm)
     if (shmctl(shmid, IPC_SET, &shmbuf) == -1) {
         return errno;
     }
+    return APR_SUCCESS;
+#elif APR_USE_SHMEM_MMAP_SHM && !defined(DARWIN)
+    /* ### This hangs or fails on MacOS, so skipping this for the
+     * ENOTIMPL case there - unclear why or if that's fixable. */
+    apr_shm_t *shm = (apr_shm_t *)theshm;
+    const char *shm_name;
+    int fd;
+    apr_status_t rv;
+
+    if (!shm->filename)
+        return APR_ENOTIMPL;
+
+    shm_name = make_shm_open_safe_name(shm->filename, shm->pool);
+
+    fd = shm_open(shm_name, O_RDWR, 0);
+    if (fd == -1)
+        return errno;
+
+    if (fchown(fd, uid, gid)) {
+        rv = errno;
+        close(fd);
+        return rv;
+    }
+
+    if (fchmod(fd, apr_unix_perms2mode(perms))) {
+        rv = errno;
+        close(fd);
+        return rv;
+    }
+    close(fd);
+    return APR_SUCCESS;
+#elif APR_USE_SHMEM_MMAP_TMP
+    apr_shm_t *shm = (apr_shm_t *)theshm;
+
+    if (!shm->filename)
+        return APR_ENOTIMPL;
+
+    if (chown(shm->filename, uid, gid))
+        return errno;
+
+    if (chmod(shm->filename, apr_unix_perms2mode(perms)))
+        return errno;
+
     return APR_SUCCESS;
 #else
     return APR_ENOTIMPL;

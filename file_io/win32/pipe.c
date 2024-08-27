@@ -35,6 +35,10 @@
 #endif
 #include "apr_arch_misc.h"
 
+#ifdef _MSC_VER
+#define getpid _getpid
+#endif
+
 APR_DECLARE(apr_status_t) apr_file_pipe_timeout_set(apr_file_t *thepipe,
                                             apr_interval_time_t timeout)
 {
@@ -303,9 +307,16 @@ static apr_status_t create_socket_pipe(SOCKET *rd, SOCKET *wr)
         return apr_get_netos_error();
     }
 
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4996) // inet_addr() is deprecated.
+#endif
     pa.sin_family = AF_INET;
     pa.sin_port   = 0;
     pa.sin_addr.s_addr = inet_addr("127.0.0.1");
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
     if (bind(ls, (SOCKADDR *)&pa, sizeof(pa)) == SOCKET_ERROR) {
         rv =  apr_get_netos_error();

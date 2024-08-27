@@ -47,8 +47,8 @@
 
 /* So that we can use inline on some critical functions, and use
  * GNUC attributes (such as to get -Wall warnings for printf-like
- * functions).  Only do this in gcc 2.7 or later ... it may work
- * on earlier stuff, but why chance it.
+ * functions).  Both __inline__ and __attribute__ exist for gcc >= 2.7,
+ * other !__GNUC__ compilers may provide __attribute__ still.
  *
  * We've since discovered that the gcc shipped with NeXT systems
  * as "cc" is completely broken.  It claims to be __GNUC__ and so
@@ -56,18 +56,22 @@
  * means.  In particular it's missing inline and the __attribute__
  * stuff.  So we hack around it.  PR#1613. -djg
  */
-#if !defined(__GNUC__) || __GNUC__ < 2 || \
-    (__GNUC__ == 2 && __GNUC_MINOR__ < 7) ||\
-    defined(NEXT)
-#ifndef __attribute__
+#if defined(__GNUC__) \
+    && (__GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 7)) \
+    && !defined(NEXT)
+#define APR_INLINE  __inline__
+#define APR_HAS_INLINE          1
+#else  /* !__GNUC__ */
+#define APR_INLINE
+#define APR_HAS_INLINE          0
+/* __has_attribute should always be a pre-defined macro, but not
+ * necessarily __attribute__ (e.g. builtin), so check for both to
+ * avoid overriding __attribute__.
+ */
+#if !(defined(__attribute__) || defined(__has_attribute))
 #define __attribute__(__x)
 #endif
-#define APR_INLINE
-#define APR_HAS_INLINE           0
-#else
-#define APR_INLINE __inline__
-#define APR_HAS_INLINE           1
-#endif
+#endif /* !__GNUC__ */
 
 #define APR_HAVE_ARPA_INET_H     @arpa_ineth@
 #define APR_HAVE_CONIO_H         @conioh@
@@ -88,6 +92,7 @@
 #define APR_HAVE_SEMAPHORE_H     @semaphoreh@
 #define APR_HAVE_SIGNAL_H        @signalh@
 #define APR_HAVE_STDARG_H        @stdargh@
+#define APR_HAVE_STDDEF_H        @stddefh@
 #define APR_HAVE_STDINT_H        @stdint@
 #define APR_HAVE_STDIO_H         @stdioh@
 #define APR_HAVE_STDLIB_H        @stdlibh@
@@ -163,6 +168,10 @@
 
 #if APR_HAVE_SYS_TYPES_H
 #include <sys/types.h>
+#endif
+
+#if APR_HAVE_STDDEF_H
+#include <stddef.h>
 #endif
 
 #if APR_HAVE_SYS_SOCKET_H

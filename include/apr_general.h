@@ -103,11 +103,18 @@ typedef int               apr_signum_t;
  * @param field  data field within the structure
  * @return offset
  */
+#if defined(__has_builtin)
+#if __has_builtin(__builtin_offsetof)
+#define APR_OFFSETOF(s_type,field) __builtin_offsetof(s_type,field)
+#endif
+#endif /* __has_builtin */
+#ifndef APR_OFFSETOF
 #if defined(offsetof) && !defined(__cplusplus)
 #define APR_OFFSETOF(s_type,field) offsetof(s_type,field)
 #else
 #define APR_OFFSETOF(s_type,field) APR_OFFSET(s_type*,field)
 #endif
+#endif /* ndef APR_OFFSETOF */
 
 #ifndef DOXYGEN
 
@@ -115,13 +122,21 @@ typedef int               apr_signum_t;
  * have it
  */
 #if (!APR_HAVE_STRCASECMP) && (APR_HAVE_STRICMP) 
+#ifdef _MSC_VER
+#define strcasecmp(s1, s2) _stricmp(s1, s2)
+#else
 #define strcasecmp(s1, s2) stricmp(s1, s2)
+#endif
 #elif (!APR_HAVE_STRCASECMP)
 int strcasecmp(const char *a, const char *b);
 #endif
 
 #if (!APR_HAVE_STRNCASECMP) && (APR_HAVE_STRNICMP)
+#ifdef _MSC_VER
+#define strncasecmp(s1, s2, n) _strnicmp(s1, s2, n)
+#else
 #define strncasecmp(s1, s2, n) strnicmp(s1, s2, n)
+#endif
 #elif (!APR_HAVE_STRNCASECMP)
 int strncasecmp(const char *a, const char *b, size_t n);
 #endif

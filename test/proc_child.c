@@ -8,6 +8,11 @@
 #endif
 #include <stdlib.h>
 
+#ifdef _MSC_VER
+#define read _read
+#define write _write
+#endif
+
 int main(void)
 {
     char buf[256];

@@ -38,8 +38,7 @@
  */
 
 
-#define APR_COPYRIGHT "Copyright (c) 2000-2023 The Apache Software " \
-                      "Foundation or its licensors, as applicable."
+#define APR_COPYRIGHT "Copyright 2024 The Apache Software Foundation."
 
 /* The numeric compile-time version constants. These constants are the
  * authoritative version numbers for APR. 
@@ -62,7 +61,7 @@
  * The Patch Level never includes API changes, simply bug fixes.
  * Reset to 0 when upgrading APR_MINOR_VERSION
  */
-#define APR_PATCH_VERSION       4
+#define APR_PATCH_VERSION       5
 
 /** 
  * The symbol APR_IS_DEV_VERSION is only defined for internal,

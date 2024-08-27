@@ -125,11 +125,38 @@
  * are platform specific and should NOT be relied upon!</em></strong>
  */
 
-#define APR_INLINE __inline
+/* So that we can use inline on some critical functions, and use
+ * GNUC attributes (such as to get -Wall warnings for printf-like
+ * functions).  Both __inline__ and __attribute__ exist for gcc >= 2.7,
+ * other !__GNUC__ compilers may provide __attribute__ still.
+ *
+ * We've since discovered that the gcc shipped with NeXT systems
+ * as "cc" is completely broken.  It claims to be __GNUC__ and so
+ * on, but it doesn't implement half of the things that __GNUC__
+ * means.  In particular it's missing inline and the __attribute__
+ * stuff.  So we hack around it.  PR#1613. -djg
+ */
+#if defined(__GNUC__) \
+    && (__GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 7)) \
+    && !defined(NEXT)
+#define APR_INLINE  __inline__
 #define APR_HAS_INLINE          1
-#if !defined(__GNUC__) && !defined(__attribute__)
+#else  /* !__GNUC__ */
+#if defined(_MSC_VER)
+#define APR_INLINE  __inline
+#define APR_HAS_INLINE          1
+#else  /* !_MSC_VER */
+#define APR_INLINE
+#define APR_HAS_INLINE          0
+#endif /* !_MSC_VER */
+/* __has_attribute should always be a pre-defined macro, but not
+ * necessarily __attribute__ (e.g. builtin), so check for both to
+ * avoid overriding __attribute__.
+ */
+#if !(defined(__attribute__) || defined(__has_attribute))
 #define __attribute__(__x)
 #endif
+#endif /* !__GNUC__ */
 
 #ifndef _WIN32_WCE
 #define APR_HAVE_ARPA_INET_H    0

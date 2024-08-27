@@ -285,6 +285,36 @@ static void test_named_delete(abts_case *tc, void *data)
     ABTS_TRUE(tc, rv != 0);
 }
 
+static void test_named_perms(abts_case *tc, void *data)
+{
+    apr_status_t rv;
+    apr_shm_t *shm;
+    apr_uid_t uid;
+    apr_gid_t gid;
+
+    apr_shm_remove(SHARED_FILENAME, p);
+
+    rv = apr_shm_create(&shm, SHARED_SIZE, SHARED_FILENAME, p);
+    APR_ASSERT_SUCCESS(tc, "Error allocating shared memory block", rv);
+    if (rv != APR_SUCCESS) {
+        return;
+    }
+    ABTS_PTR_NOTNULL(tc, shm);
+
+    rv = apr_uid_current(&uid, &gid, p);
+    APR_ASSERT_SUCCESS(tc, "retrieve current uid/gid", rv);
+    if (rv) return;
+
+    rv = apr_shm_perms_set(shm,
+                           APR_FPROT_UREAD|APR_FPROT_UWRITE, uid, gid);
+    apr_shm_destroy(shm);
+
+    if (rv == APR_ENOTIMPL)
+        ABTS_SKIP(tc, data, "apr_shm_perms_set not implemented for named shm");
+    else
+        APR_ASSERT_SUCCESS(tc, "Could not change permissions of shm segment", rv);
+}
+
 #endif
 
 abts_suite *testshm(abts_suite *suite)
@@ -301,6 +331,7 @@ abts_suite *testshm(abts_suite *suite)
     abts_run_test(suite, test_named, NULL); 
     abts_run_test(suite, test_named_remove, NULL); 
     abts_run_test(suite, test_named_delete, NULL); 
+    abts_run_test(suite, test_named_perms, NULL);
 #endif
 
     return suite;
