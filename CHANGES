@@ -1,5 +1,35 @@
                                                      -*- coding: utf-8 -*-
+Changes for APR 1.7.6
+
+  *) test/testsock.c (test_get_addr): Fix test to portably switch
+     the socket to non-blocking mode using apr_socket_timeout_set().
+     Also make the test SKIP for the case where the connect() completes
+     synchronously. [Ivan Zhakov]
+
+  *) network_io/win32/sockets.c: (apr_socket_connect): Copy the remote
+     address by value rather than by reference.  This ensures that the
+     sockaddr object returned by apr_socket_addr_get is allocated from
+     the same pool as the socket object itself, as apr_socket_accept
+     does; avoiding any potential lifetime mismatches. [Ivan Zhakov]
+
+  *) CMake: Install include/apr_encode.h. [Ivan Zhakov]
+
+  *) CMake: Fix installation PDB files with multi-config generators.
+     [Ivan Zhakov]
+
 Changes for APR 1.7.5
+
+  *) SECURITY: CVE-2023-49582: Apache Portable Runtime (APR):
+     Unexpected lax shared memory permissions (cve.mitre.org)
+     Lax permissions set by the Apache Portable Runtime library on
+     Unix platforms would allow local users read access to named
+     shared memory segments, potentially revealing sensitive
+     application data.
+     This issue does not affect non-Unix platforms, or builds with
+     APR_USE_SHMEM_SHMGET=1 (apr.h)
+     Users are recommended to upgrade to APR version 1.7.5, which
+     fixes this issue.
+     Credits: Thomas Stangner
 
   *) Unix: Implement apr_shm_perms_set() for the "POSIX shm_open()"
      and "classic mmap" shared memory implementations.  [Joe Orton,
