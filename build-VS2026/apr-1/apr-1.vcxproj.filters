@@ -1,0 +1,355 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\atomic">
+      <UniqueIdentifier>{fabb63b5-a73f-4705-b9b5-504bf3d6aef4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\atomic\win32">
+      <UniqueIdentifier>{768fa90c-a2e0-4bc8-afaf-97e96c56c1e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\dso">
+      <UniqueIdentifier>{a4c4386e-cc03-4b28-99c2-c3fe92b3a557}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\dso\win32">
+      <UniqueIdentifier>{12d90358-1f16-4750-a364-aeeea68425ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\encoding">
+      <UniqueIdentifier>{9e69ea16-7875-48ac-90f3-1b28b2440b99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\file_io">
+      <UniqueIdentifier>{e0e17c2f-bbbe-4604-8efe-ba45bf85a4f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\file_io\unix">
+      <UniqueIdentifier>{5498b130-09aa-4cde-a98a-c848aa457b92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\file_io\win32">
+      <UniqueIdentifier>{5d10f882-e94d-40d1-9907-93842077665a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\locks">
+      <UniqueIdentifier>{afa2ed2b-2d94-4c09-b442-0111ab98774a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\locks\win32">
+      <UniqueIdentifier>{e0bc6686-0981-4c92-808a-ea061920d363}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\memory">
+      <UniqueIdentifier>{79df24b3-b349-4e5c-b1cf-77075bca4958}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\memory\unix">
+      <UniqueIdentifier>{83c417ee-f45b-4900-9f05-385121d08462}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\misc">
+      <UniqueIdentifier>{ad87a632-7127-4a72-8208-627f90cfefd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\misc\unix">
+      <UniqueIdentifier>{7e5544cc-e7bc-481a-ada2-d3571c9004bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\misc\win32">
+      <UniqueIdentifier>{69e51503-11c5-4628-9fdf-2c288c827284}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\mmap">
+      <UniqueIdentifier>{bbe96f34-647c-4090-9fff-e087f2d874c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\mmap\unix">
+      <UniqueIdentifier>{bf5d10e1-b216-4356-8b77-7164f102b629}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\mmap\win32">
+      <UniqueIdentifier>{e4ae47ca-6573-45af-8a05-8be8d60ba74f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\network">
+      <UniqueIdentifier>{7fca7b83-3dc1-453d-bf68-a39e628b0877}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\network\unix">
+      <UniqueIdentifier>{f7cc0eac-8eee-451c-8a9e-0f0e8afc8168}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\network\win32">
+      <UniqueIdentifier>{5e23c51a-bb52-46b4-a2fc-80cf3ceb46bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\passwd">
+      <UniqueIdentifier>{466f94b4-16b3-4d7a-b327-5f8e8398cfcf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\poll">
+      <UniqueIdentifier>{bc772fe9-4ce0-4a80-b17a-fe76ccc3c6ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\poll\unix">
+      <UniqueIdentifier>{479f2058-64e7-4f5a-a231-d3ffdd9f547c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\random">
+      <UniqueIdentifier>{972c9c0b-7a16-4bb1-a42a-52ad03bdec47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\random\unix">
+      <UniqueIdentifier>{de83d1ce-9a1d-47cb-af62-bb386e701202}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\shmem">
+      <UniqueIdentifier>{a8b1a6bb-e1d0-445a-ae60-e7e29137092b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\shmem\win32">
+      <UniqueIdentifier>{84cf359f-447a-40bc-9798-0ed8158c10fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\strings">
+      <UniqueIdentifier>{8a84b911-d2cd-4f7f-9579-e4bfe3541b36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\tables">
+      <UniqueIdentifier>{6f484019-2153-42c8-875d-0637833687d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\threadproc">
+      <UniqueIdentifier>{d0c7735e-1148-4152-a262-de0de6dd777b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\threadproc\win32">
+      <UniqueIdentifier>{0df50d7d-cdf0-4c8f-8986-39bfa5feadfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\time">
+      <UniqueIdentifier>{70b5adac-6ac8-4a9b-bdb6-238b766f63ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\time\win32">
+      <UniqueIdentifier>{3386c40d-f489-41f4-803f-21781deeb8b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\user">
+      <UniqueIdentifier>{696eec08-d2f2-4413-833a-ff5569a8c366}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\user\win32">
+      <UniqueIdentifier>{d5051e29-9a40-45b3-904a-1f906730f876}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\atomic\win32\apr_atomic.c">
+      <Filter>Source Files\atomic\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dso\win32\dso.c">
+      <Filter>Source Files\dso\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\encoding\apr_escape.c">
+      <Filter>Source Files\encoding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\file_io\unix\fullrw.c">
+      <Filter>Source Files\file_io\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\file_io\unix\mktemp.c">
+      <Filter>Source Files\file_io\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\file_io\unix\tempdir.c">
+      <Filter>Source Files\file_io\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\file_io\unix\copy.c">
+      <Filter>Source Files\file_io\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\file_io\unix\fileacc.c">
+      <Filter>Source Files\file_io\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\file_io\unix\filepath_util.c">
+      <Filter>Source Files\file_io\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\file_io\win32\filestat.c">
+      <Filter>Source Files\file_io\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\file_io\win32\filesys.c">
+      <Filter>Source Files\file_io\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\file_io\win32\flock.c">
+      <Filter>Source Files\file_io\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\file_io\win32\open.c">
+      <Filter>Source Files\file_io\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\file_io\win32\pipe.c">
+      <Filter>Source Files\file_io\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\file_io\win32\readwrite.c">
+      <Filter>Source Files\file_io\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\file_io\win32\seek.c">
+      <Filter>Source Files\file_io\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\file_io\win32\buffer.c">
+      <Filter>Source Files\file_io\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\file_io\win32\dir.c">
+      <Filter>Source Files\file_io\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\file_io\win32\filedup.c">
+      <Filter>Source Files\file_io\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\file_io\win32\filepath.c">
+      <Filter>Source Files\file_io\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\locks\win32\thread_cond.c">
+      <Filter>Source Files\locks\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\locks\win32\thread_mutex.c">
+      <Filter>Source Files\locks\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\locks\win32\thread_rwlock.c">
+      <Filter>Source Files\locks\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\locks\win32\proc_mutex.c">
+      <Filter>Source Files\locks\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\memory\unix\apr_pools.c">
+      <Filter>Source Files\memory\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\misc\unix\errorcodes.c">
+      <Filter>Source Files\misc\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\misc\unix\getopt.c">
+      <Filter>Source Files\misc\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\misc\unix\otherchild.c">
+      <Filter>Source Files\misc\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\misc\unix\version.c">
+      <Filter>Source Files\misc\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\misc\win32\internal.c">
+      <Filter>Source Files\misc\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\misc\win32\misc.c">
+      <Filter>Source Files\misc\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\misc\win32\rand.c">
+      <Filter>Source Files\misc\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\misc\win32\start.c">
+      <Filter>Source Files\misc\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\misc\win32\utf8.c">
+      <Filter>Source Files\misc\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\misc\win32\charset.c">
+      <Filter>Source Files\misc\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\misc\win32\env.c">
+      <Filter>Source Files\misc\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\mmap\unix\common.c">
+      <Filter>Source Files\mmap\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\mmap\win32\mmap.c">
+      <Filter>Source Files\mmap\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\network_io\unix\inet_pton.c">
+      <Filter>Source Files\network\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\network_io\unix\multicast.c">
+      <Filter>Source Files\network\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\network_io\unix\sockaddr.c">
+      <Filter>Source Files\network\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\network_io\unix\socket_util.c">
+      <Filter>Source Files\network\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\network_io\unix\inet_ntop.c">
+      <Filter>Source Files\network\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\network_io\win32\sockets.c">
+      <Filter>Source Files\network\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\network_io\win32\sockopt.c">
+      <Filter>Source Files\network\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\network_io\win32\sendrecv.c">
+      <Filter>Source Files\network\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\passwd\apr_getpass.c">
+      <Filter>Source Files\passwd</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\poll\unix\pollcb.c">
+      <Filter>Source Files\poll\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\poll\unix\pollset.c">
+      <Filter>Source Files\poll\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\poll\unix\select.c">
+      <Filter>Source Files\poll\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\poll\unix\wakeup.c">
+      <Filter>Source Files\poll\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\poll\unix\poll.c">
+      <Filter>Source Files\poll\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\random\unix\apr_random.c">
+      <Filter>Source Files\random\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\random\unix\sha2.c">
+      <Filter>Source Files\random\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\random\unix\sha2_glue.c">
+      <Filter>Source Files\random\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\shmem\win32\shm.c">
+      <Filter>Source Files\shmem\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\strings\apr_snprintf.c">
+      <Filter>Source Files\strings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\strings\apr_strings.c">
+      <Filter>Source Files\strings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\strings\apr_strnatcmp.c">
+      <Filter>Source Files\strings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\strings\apr_strtok.c">
+      <Filter>Source Files\strings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\strings\apr_cpystrn.c">
+      <Filter>Source Files\strings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\strings\apr_cstr.c">
+      <Filter>Source Files\strings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\strings\apr_fnmatch.c">
+      <Filter>Source Files\strings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tables\apr_skiplist.c">
+      <Filter>Source Files\tables</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tables\apr_tables.c">
+      <Filter>Source Files\tables</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tables\apr_hash.c">
+      <Filter>Source Files\tables</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\threadproc\win32\thread.c">
+      <Filter>Source Files\threadproc\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\threadproc\win32\threadpriv.c">
+      <Filter>Source Files\threadproc\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\threadproc\win32\proc.c">
+      <Filter>Source Files\threadproc\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\threadproc\win32\signals.c">
+      <Filter>Source Files\threadproc\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\time\win32\time.c">
+      <Filter>Source Files\time\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\time\win32\timestr.c">
+      <Filter>Source Files\time\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\user\win32\groupinfo.c">
+      <Filter>Source Files\user\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\user\win32\userinfo.c">
+      <Filter>Source Files\user\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\atomic\win32\apr_atomic64.c">
+      <Filter>Source Files\atomic\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\encoding\apr_encode.c">
+      <Filter>Source Files\encoding</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
